@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Container, Background } from './styles';
 import logo from '~/assets/logo.png';
 
-import * as authActions from '~/store/modules/auth/actions';
+import api from '~/services/api';
+import history from '~/services/history';
 
-function SignIn() {
-  const dispatch = useDispatch();
+function SignUp() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    dispatch(authActions.signInRequest(email, password));
+    try {
+      await api.post('/users', {
+        name,
+        email,
+        password,
+      });
+      toast.success(
+        'You have successfully created your account, please verify your email.'
+      );
+      history.push('/');
+    } catch (err) {
+      toast.error(err.response.data.err);
+    }
   }
 
   return (
@@ -22,6 +35,14 @@ function SignIn() {
       <Container>
         <img src={logo} alt="Fast Feet" />
         <form onSubmit={handleSubmit}>
+          <b>NAME</b> <br />
+          <input
+            name="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="John Doe"
+          />
           <b>E-MAIL</b> <br />
           <input
             name="email"
@@ -38,12 +59,12 @@ function SignIn() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="*********"
           />
-          <button type="submit">Log in</button>
+          <button type="submit">Submit</button>
         </form>
-        <Link to="/register">-> Does not have an account?</Link>
+        <Link to="/">-> Already have an account?</Link>
       </Container>
     </Background>
   );
 }
 
-export default SignIn;
+export default SignUp;

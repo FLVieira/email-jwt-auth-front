@@ -13,10 +13,10 @@ export function* signIn({ payload }) {
       password,
     });
 
-    const { token } = response.data;
+    const { token, user } = response.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
-    yield put(authActions.signInSuccess(token));
+    yield put(authActions.signInSuccess(token, user));
     history.push('/dashboard');
   } catch (err) {
     toast.error(err.response.data.error);

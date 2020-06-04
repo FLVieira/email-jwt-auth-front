@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   token: null,
   isLoggedIn: false,
   loading: false,
+  user: null,
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -15,6 +16,7 @@ export default function auth(state = INITIAL_STATE, action) {
       }
       case '@auth/SIGN_IN_SUCCESS': {
         draft.token = action.payload.token;
+        draft.user = action.payload.user;
         draft.isLoggedIn = true;
         draft.loading = false;
         break;
