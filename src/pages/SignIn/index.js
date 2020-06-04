@@ -40,7 +40,8 @@ function SignIn() {
           />
           <button type="submit">Log in</button>
         </form>
-        <Link to="/register">-> Does not have an account?</Link>
+        <Link to="/register">Does not have an account?</Link>
+        <Link to="/recovery">Forgot your password?</Link>
       </Container>
     </Background>
   );
