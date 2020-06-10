@@ -8,19 +8,8 @@ import { Container } from './styles';
 
 function VerifyAccount({ match }) {
   const { id } = match.params;
-  const cryptr = new Cryptr('YourSecretHere');
-  const decryptedId = cryptr.decrypt(id);
-
+  const [decryptedId, setDecryptedId] = useState('');
   const [timeLeft, setTimeLeft] = useState(5);
-
-  useEffect(() => {
-    async function updateUser() {
-      await api.put(`/users/${decryptedId}`, {
-        verified: true,
-      });
-    }
-    updateUser();
-  }, [decryptedId]);
 
   useEffect(() => {
     if (!timeLeft) {
@@ -30,6 +19,18 @@ function VerifyAccount({ match }) {
       timeLeft > 0 && setInterval(() => setTimeLeft(timeLeft - 1), 1000);
     return () => clearInterval(timer);
   }, [timeLeft]);
+
+  useEffect(() => {
+    const cryptr = new Cryptr('YourSecretHere');
+    setDecryptedId(cryptr.decrypt(id));
+
+    async function updateUser() {
+      await api.put(`/users/${decryptedId}`, {
+        verified: true,
+      });
+    }
+    updateUser();
+  }, [decryptedId, id]);
 
   return (
     <Container>
