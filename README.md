@@ -12,6 +12,12 @@ environment use AMAZON SES or related). If the user's email has not been verifie
 not be able the enter his account. Another funcionality that I implemented is the famous "recover your password", here the 
 user will provide his information and an email will be sent to his inbox with instructions to change his current password.
 
+## Observations
+
+I have done this app with the intention of creating a simple template that takes care of the initial authentication resolutions,
+although it still's need further funcionalities and coding from whoever decides to use in order to become a full authentication
+"tool".
+
 ## 📥  Installation 
 
 Prerequesites:
@@ -26,6 +32,9 @@ Prerequesites:
 2. cd email-jwt-auth-front
 3. yarn 
 4. yarn start
+´´´
+
+
 
 
 
